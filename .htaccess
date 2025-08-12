@@ -1,14 +1,14 @@
-# تفعيل mod_rewrite
 RewriteEngine On
+RewriteBase /Portfolio/
 
-# ✅ توجيه روابط السكشنات (about, services, resume, contact) إلى index.html
-RewriteRule ^(about|services|resume|contact)/?$ /index.html [L]
+# ✅ أي مسار هو سكشن نحوله للصفحة الرئيسية
+RewriteRule ^(about|services|resume|contact|hero)/?$ index.html [L]
 
-# ✅ توجيه طلبات بدون .html لتفتح الملف .html فعليًا
+# ✅ طلبات بدون .html تفتح ملف .html إذا كان موجود
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^([^/]+)/?$ $1.html [L]
 
-# ✅ توجيه العكس: لو حد كتب .html في الرابط، نحوله تلقائيًا بدون .html
+# ✅ لو الرابط فيه .html نحوله لنسخة بدونها
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
 RewriteRule ^ %1 [R=301,L]
 

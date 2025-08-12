@@ -423,7 +423,7 @@
                     <i class="bi bi-trophy"></i>
                   </div>
                   <div class="stat-info">
-                    <span class="stat-number">10+</span>
+                    <span class="stat-number">14+</span>
                     <span class="stat-label">Years Experience</span>
                   </div>
                 </div>
@@ -930,18 +930,19 @@
     });
   </script>
   <script>
-    const path = window.location.pathname.replace(/^\/+|\/+$/g, '');
-    const sections = ['about', 'services', 'resume', 'contact'];
+    document.addEventListener('DOMContentLoaded', () => {
+      const path = window.location.pathname.replace(/^\/Portfolio\/|\/$/g, '');
+      const sections = ['hero', 'about', 'services', 'resume', 'contact'];
 
-    if (sections.includes(path)) {
-      window.addEventListener('DOMContentLoaded', () => {
+      if (sections.includes(path)) {
         const el = document.getElementById(path);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         }
-      });
-    }
+      }
+    });
   </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <script>
     const FALLBACK = {

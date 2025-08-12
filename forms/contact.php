@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $mail->Subject = !empty($_POST['subject']) ? htmlspecialchars($_POST['subject']) : 'New Portfolio Message';
 
-        $logoUrl = 'https://myPortfolio.com/assets/img/profile/abdelaziz.jpg';
+        $logoUrl = 'https://raw.githubusercontent.com/AhmedSala51998/Portfolio_Abdelaziz/master/assets/img/profile/abdelaziz.jpg';
 
         $body = '
             <div style="background-color: #e6f0fa; padding: 40px 0; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif; direction: rtl; text-align: right;">
