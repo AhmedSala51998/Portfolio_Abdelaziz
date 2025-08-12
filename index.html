@@ -901,34 +901,35 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
   <script>
-    $(document).on('submit', '#contactForm', function(e) {
-      e.preventDefault();
+  $(document).on('submit', '#contactForm', function(e) {
+    e.preventDefault();
 
-      var form = $(this);
-      var btn = form.find('button[type="submit"]');
-      btn.prop('disabled', true).text('جاري الإرسال...');
+    var form = $(this);
+    var btn = form.find('button[type="submit"]');
+    btn.prop('disabled', true).text('Sending...');
 
-      $.ajax({
-        url: 'forms/contact.php',
-        method: 'POST',
-        data: form.serialize(),
-        success: function(response) {
-          if (response.status === 'success') {
-            toastr.success(response.message, 'تم بنجاح', { timeOut: 5000 });
-            form[0].reset();
-          } else {
-            toastr.error(response.message, 'خطأ', { timeOut: 7000 });
-          }
-        },
-        error: function() {
-          toastr.error('حدث خطأ غير متوقع. حاول لاحقًا.', 'فشل');
-        },
-        complete: function() {
-          btn.prop('disabled', false).text('إرسال');
+    $.ajax({
+      url: 'forms/contact.php',
+      method: 'POST',
+      data: form.serialize(),
+      success: function(response) {
+        if (response.status === 'success') {
+          toastr.success(response.message, 'Success', { timeOut: 5000 });
+          form[0].reset();
+        } else {
+          toastr.error(response.message, 'Error', { timeOut: 7000 });
         }
-      });
+      },
+      error: function() {
+        toastr.error('An unexpected error occurred. Please try again later.', 'Failed');
+      },
+      complete: function() {
+        btn.prop('disabled', false).text('Send');
+      }
     });
+  });
   </script>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const path = window.location.pathname.replace(/^\/Portfolio\/|\/$/g, '');

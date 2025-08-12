@@ -101,15 +101,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
 
         echo json_encode([
-          'status' => 'success',
-          'message' => '✅ تم إرسال الرسالة بنجاح'
+            'status' => 'success',
+            'message' => '✅ Message sent successfully'
         ]);
-    } catch (Exception $e) {
-        echo json_encode([
-          'status' => 'error',
-          'message' => '❌ فشل في الإرسال: ' . $mail->ErrorInfo
-        ]);
-    }
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => '❌ Failed to send: ' . $mail->ErrorInfo
+            ]);
+        }
 
 } else {
     echo json_encode([
