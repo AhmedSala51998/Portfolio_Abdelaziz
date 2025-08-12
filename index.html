@@ -165,7 +165,7 @@
           <div class="col-lg-7" data-aos="fade-left" data-aos-delay="300">
             <div class="about-content">
               <div class="intro">
-                <h2>Hi, I'm Abdulaziz – Recruitment & Manpower Specialist</h2>
+                <h2>Hi, I'm Abdulaziz Fadl – Recruitment & Manpower Specialist</h2>
                 <p>
                   With extensive experience in recruitment and manpower services across the Kingdom of Saudi Arabia, I have 
                   successfully managed hundreds of cases, sourcing skilled workers and streamlining hiring processes for 
@@ -220,7 +220,7 @@
                 </div>
                 <div class="action-buttons">
                   <a href="/Portfolio/services" class="btn btn-primary">Explore My Services</a>
-                  <!--<a href="#" class="btn btn-outline">Download Profile</a>-->
+                  <a download href="#" id="downloadProfile" class="btn btn-outline">Download Profile</a>
                 </div>
               </div>
 
@@ -942,6 +942,209 @@
       });
     }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    const FALLBACK = {
+      name: "Abdulaziz",
+      role: "Recruitment & Manpower Specialist",
+      location: "Saudi Arabia",
+      phone: "+966567817749",
+      email: "azizmokbel81@gmail.com",
+      summary: "With extensive experience in recruitment and manpower services across the Kingdom of Saudi Arabia, I have successfully managed hundreds of cases, sourcing skilled workers and streamlining hiring processes for companies in various sectors. My approach combines deep market knowledge, reliable partnerships, and a commitment to delivering fast and professional recruitment solutions.",
+      technical: [
+        "Manpower Sourcing",
+        "Recruitment Process Management",
+        "International Partnerships",
+        "Talent Acquisition",
+        "Candidate Screening",
+        "Contract Management",
+        "Labor Law Compliance",
+        "Onboarding Processes",
+        "Global Agency Networking",
+        "Visa Processing",
+        "Cultural Integration",
+        "Client Negotiations",
+        "Service Customization",
+        "Client Retention"
+      ],
+      experienceHTML: `
+        <div class="exp-item">
+          <div class="exp-title">Ejaz Recruitment Company</div>
+          <div class="exp-meta">Operations Manager — Dec 2023 - Present</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-title">Mowaten Company</div>
+          <div class="exp-meta">Operations Manager — Jan 2023 - Dec 2023</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-title">Rawafid Najd Recruitment Company</div>
+          <div class="exp-meta">External Relations Manager — Jan 2021 - Dec 2023</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-title">Salah Al-Bayan Recruitment Office</div>
+          <div class="exp-meta">Operations Manager — Jan 2016 - Dec 2019</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-title">Earth Stars Contracting Company</div>
+          <div class="exp-meta">External Relations Manager — Jan 2011 - Feb 2015</div>
+        </div>
+      `,
+      educationHTML: `
+        <div class="exp-item">
+          <div class="exp-title">Bachelor's Degree in Media</div>
+          <div class="exp-meta">Specialization in Journalism & Television — Aug 1998 - Apr 2002</div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-title">Business Management Training Course</div>
+          <div class="exp-meta">Professional Development Program — Jan 2019</div>
+        </div>
+      `,
+      projectsHTML: ``,
+      languagesHTML: `
+      <div style="display:flex; gap:20px;">
+        <p>Arabic (Native)</p>---
+        <p>English (Professional)</p>
+      </div>
+    `,
+      photo: "assets/img/profile/abdelaziz.jpg"
+    };
+
+    function getText(selector) {
+      const el = document.querySelector(selector);
+      return el ? el.innerText.trim() : "";
+    }
+    function getHTML(selector) {
+      const el = document.querySelector(selector);
+      return el ? el.innerHTML.trim() : "";
+    }
+    function getAttr(selector, attr) {
+      const el = document.querySelector(selector);
+      return el ? el.getAttribute(attr) : null;
+    }
+
+    document.getElementById("downloadProfile").addEventListener("click", function (ev) {
+      ev.preventDefault();
+
+      // name & role
+      const aboutH2 = getText("#about .intro h2") || FALLBACK.name;
+      const name = aboutH2.split("–")[0].replace("Hi, I'm", "").trim() || FALLBACK.name;
+      const role = aboutH2.split("–")[1] ? aboutH2.split("–")[1].trim() : FALLBACK.role;
+      
+      // summary & photo
+      const summary = getText("#about .intro p") || FALLBACK.summary;
+      const profileImage = getAttr("#about img.img-fluid", "src") || FALLBACK.photo;
+
+
+
+      // skills
+      let skillsList = [];
+      document.querySelectorAll("#skills .skill-item h4, #skills .skill-name").forEach(s => {
+        skillsList.push(s.innerText.trim());
+      });
+      if (skillsList.length === 0) skillsList = FALLBACK.technical;
+
+      // experience & education
+      let educationHTML = getHTML("#resume .education-section") || FALLBACK.educationHTML;
+      let educationHTML1 = getHTML("#resume .education-section") || FALLBACK.educationHTML;
+
+      let experienceHTML = getHTML("#resume .experience-section") || FALLBACK.experienceHTML;
+
+      experienceHTML = experienceHTML
+        .replace(/<h2/gi, '<h2 style="font-size:16px;line-height:1.3"')
+        .replace(/<h3/gi, '<h3 style="font-size:13px;line-height:1.3"')
+        .replace(/<h4/gi, '<h4 style="font-size:15px;line-height:1.3"')
+        .replace(/<p/gi, '<p style="font-size:11px;line-height:1.4"');
+
+      educationHTML = educationHTML
+        .replace(/<h2/gi, '<h2 style="font-size:16px;line-height:1.3"')
+        .replace(/<h4/gi, '<h4 style="font-size:15px;line-height:1.3"')
+        .replace(/<h3/gi, '<h3 style="font-size:15px;line-height:1.3"');
+
+
+      // contact
+      const contactEmail = FALLBACK.email; 
+      const contactPhone = FALLBACK.phone; 
+      const contactLocation = FALLBACK.location;
+
+      // build CV HTML
+      const cvHTML = `
+      <div class="cv-print injected" dir="ltr">
+        <div class="cv-header">
+          <div class="cv-photo">${ profileImage ? `<img src="${profileImage}" alt="photo">` : '' }</div>
+          <div class="cv-head-meta">
+            <div class="cv-name">${name}</div>
+            <div class="cv-role">${role}</div>
+            <div class="cv-contact">
+              <div>${contactLocation}</div>
+              ${contactEmail ? `<div>📧 <a href="mailto:${contactEmail}">${contactEmail}</a></div>` : ""}
+              ${contactPhone ? `<div>📱 ${contactPhone}</div>` : ""}
+            </div>
+          </div>
+        </div>
+
+        <div class="cv-body">
+          <div class="col-left">
+            <div class="box">
+              <div class="box-title">Professional Summary</div>
+              <div class="summary-text">${escapeHtml(summary)}</div>
+            </div>
+            <div class="box">
+              <div class="box-title">Technical Skills</div>
+              <div class="skills-grid">
+                ${skillsList.map(s => `<div class="skill-badge">${escapeHtml(s)}</div>`).join('')}
+              </div>
+            </div>
+            <div class="box">
+              <div class="box-title">Languages</div>
+              <div class="summary-text">${FALLBACK.languagesHTML}</div>
+            </div>
+          </div>
+
+          <div class="col-right">
+            <div class="box">
+              <div class="box-title">Professional Experience</div>
+              <div class="cv-resume">${experienceHTML}</div>
+            </div>
+            <div class="box">
+              <div class="box-title">Education</div>
+              <div class="cv-resume">${educationHTML}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      `;
+
+      const opt = {
+        margin: [0.3, 0.35, 0.3, 0.35],
+        filename: `${name.replace(/\s+/g, '_')}_Profile.pdf`,
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+     const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = cvHTML;
+
+      html2pdf()
+        .set(opt)
+        .from(tempDiv.querySelector('.cv-print'))
+        .save();
+
+    });
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/\n/g, '<br>');
+    }
+  </script>
+
+
 </body>
 
 </html>
