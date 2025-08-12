@@ -1,16 +1,15 @@
 RewriteEngine On
-RewriteBase /Portfolio/
 
-# ✅ أي مسار هو سكشن نحوله للصفحة الرئيسية
+# أي مسار هو سكشن نفتح index.html
 RewriteRule ^(about|services|resume|contact|hero)/?$ index.html [L]
 
-# ✅ طلبات بدون .html تفتح ملف .html إذا كان موجود
+# طلبات بدون .html تفتح ملف .html إذا كان موجود
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^([^/]+)/?$ $1.html [L]
 
-# ✅ لو الرابط فيه .html نحوله لنسخة بدونها
+# لو الرابط فيه .html نحوله لنسخة بدونها
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
 RewriteRule ^ %1 [R=301,L]
 
-# ✅ جعل / يفتح index.html
+# جعل / يفتح index.html
 DirectoryIndex index.html
